@@ -11,11 +11,20 @@
 */
 
 $default_settings = [
-    'timeout_min' => '11',
+    'timeout_min' => '10',
     'server1' => '001english-eu.ddns.net',
     'port1' => '10026',
     'server2' => '',
     'port2' => '',
     'net' => 'Test',
+    'email' => '',
+    'password' => '',
+    'band_channel' => '',
+    'desc' => '',
+    'country' => '',
+    'city' => '',
+    'part_of_city' => '',
+    'callsign' => '',
+    'username' => '',    
 ];
 ?>

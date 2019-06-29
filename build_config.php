@@ -41,7 +41,7 @@ $module_config_array['Module'.$cur_mod['svxlinkName']] += [
 	'NET' => trim($options['net']),
 ];
 
-if (trim($options['callsign']) == '') {
+if (trim($options['callsign']) != '') {
 	$module_config_array['Module'.$cur_mod['svxlinkName']] += [ 'CALLSIGN_AND_USER' => trim($options['callsign']) . ', ' . trim($options['username']), ];
 } else {
 	$module_config_array['Module'.$cur_mod['svxlinkName']] += [ 'CALLSIGN_AND_USER' => trim($options['username']), ];	
