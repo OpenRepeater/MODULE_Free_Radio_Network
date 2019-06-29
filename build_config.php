@@ -5,40 +5,49 @@
 * the requiried INI format and write the config file to the appropriate location with the correct naming.
 */
 
+$options = unserialize($cur_mod['moduleOptions']);
+
 // Build Config
 $module_config_array['Module'.$cur_mod['svxlinkName']] = [
 	'NAME' => $cur_mod['svxlinkName'],
 	'ID' => $cur_mod['svxlinkID'],
-	'TIMEOUT' => '60',				
+	'TIMEOUT' => intval($options['timeout_min']) * 60,				
 ];
 
 # Details http://freeradionetwork.eu/frnprotocol.htm
 
 # main server
 $module_config_array['Module'.$cur_mod['svxlinkName']] += [
-	'SERVER' => '127.0.0.1',
-	'PORT' => '10024',
+	'SERVER' => trim($options['server1']),
+	'PORT' => trim($options['port1']),
 ];
 
 # backup server
 $module_config_array['Module'.$cur_mod['svxlinkName']] += [
-	'SERVER_BACKUP' => '127.0.0.2',
-	'PORT_BACKUP' => '10025',
+	'SERVER_BACKUP' => '',
+	'PORT_BACKUP' => '',
 ];
 
 # login details
 $module_config_array['Module'.$cur_mod['svxlinkName']] += [
 	'VERSION' => '2014000',
-	'EMAIL_ADDRESS' => 'your@example.com',
-	'DYN_PASSWORD' => '12345',
+	'EMAIL_ADDRESS' => trim($options['email']),
+	'DYN_PASSWORD' => trim($options['password']),
 	'CLIENT_TYPE' => '1',
-	'CALLSIGN_AND_USER' => 'callsign, user',
-	'BAND_AND_CHANNEL' => '446.03125FM CTC131.8',
-	'DESCRIPTION' => 'ORP FreeRadioNetwork Station',
-	'COUNTRY' => 'Antarctica',
-	'CITY_CITY_PART' => 'City - Street',
-	'NET' => 'Test',
+	'BAND_AND_CHANNEL' => trim($options['band_channel']),
+	'DESCRIPTION' => '[ORP] ' . trim($options['desc']),
+	'COUNTRY' => trim($options['country']),
+	'CITY_CITY_PART' => trim($options['city']) . ' - ' . trim($options['part_of_city']),
+	'NET' => trim($options['net']),
 ];
+
+if (trim($options['callsign']) == '') {
+	$module_config_array['Module'.$cur_mod['svxlinkName']] += [ 'CALLSIGN_AND_USER' => trim($options['callsign']) . ', ' . trim($options['username']), ];
+} else {
+	$module_config_array['Module'.$cur_mod['svxlinkName']] += [ 'CALLSIGN_AND_USER' => trim($options['username']), ];	
+}
+
+
 
 # debugging
 #FRN_DEBUG=1
